@@ -4,7 +4,7 @@
 - 💞️ I’m looking to collaborate on with upcomming tech.
 - 📫 How to reach me skirans262@gmail.com
 
-Today I have created my Own IDE.
+Today I have created my Own Python IDE.
 
 ![image](https://user-images.githubusercontent.com/98525114/151376574-047295e0-19f3-430e-af70-f00ee0baa31d.png)
 
