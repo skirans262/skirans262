@@ -30,15 +30,15 @@ def run():
     to_show_output.insert(END, error)
 
 
-
 def save_func():
     if file_path == '':
         path = asksaveasfilename(filetypes=[('Python Files', '*.py')])
     else:
-        path =file_path
-        with open(path, 'w') as some_file:
-            code = editor.get('1.0', END)
-            some_file.write(code)
+        path = file_path
+    with open(path, 'w') as some_file:
+        code = editor.get('1.0', END)
+        some_file.write(code)
+        set_file_path(path)
 
 def open_func():
     path = askopenfilename(filetypes=[('Python Files', '*.py')])
