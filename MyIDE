@@ -1,1 +1,74 @@
-I have created my own IDE
+from tkinter import *
+from tkinter.filedialog import asksaveasfilename, askopenfilename
+import subprocess
+
+compiler = Tk()   #variable
+compiler.title('My First IDE')
+file_path = ''   #global variable
+
+def set_file_path(path):
+    global file_path
+    file_path = path
+'''
+def run():
+    code = editor.get('1.0', END) #capture everything that is written in editor
+    #print(code)
+    exec(code)
+'''
+#another way importing subprocess
+
+def run():
+    if file_path == '':
+        save_prompt = Toplevel()
+        text = Label(save_prompt, text='Please save the file first')
+        text.pack()
+        return
+    command = f'python {file_path}'
+    process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    output, error  = process.communicate()
+    to_show_output.insert(END, output) #print out put in bottom
+    to_show_output.insert(END, error)
+
+
+
+def save_func():
+    if file_path == '':
+        path = asksaveasfilename(filetypes=[('Python Files', '*.py')])
+    else:
+        path =file_path
+        with open(path, 'w') as some_file:
+            code = editor.get('1.0', END)
+            some_file.write(code)
+
+def open_func():
+    path = askopenfilename(filetypes=[('Python Files', '*.py')])
+    with open(path, 'r') as some_file:
+        code = some_file.read() #step 1 read file
+        editor.delete('1.0', END) #step 2 delete everying already written on  compiler
+        editor.insert('1.0', code) #step 3 to insert content from start
+
+
+menu_bar = Menu(compiler)
+
+file_menu = Menu(menu_bar, tearoff=0)
+
+file_bar = Menu(menu_bar, tearoff=0)
+file_bar.add_command(label='Open', command=open_func)  #in command give function name
+file_bar.add_command(label='Save', command=save_func) #in command give function name
+file_bar.add_command(label='Save As', command=save_func) #in command give function name
+file_bar.add_command(label='Exit', command=exit)
+menu_bar.add_cascade(label='File', menu=file_bar)
+
+run_bar = Menu(menu_bar, tearoff=0)
+run_bar.add_command(label='Run', command=run)
+menu_bar.add_cascade(label='Run', menu=run_bar)
+
+compiler.config(menu=menu_bar)
+
+editor = Text()   #variable
+editor.pack()
+
+to_show_output = Text(height=10)
+to_show_output.pack()
+
+compiler.mainloop()
